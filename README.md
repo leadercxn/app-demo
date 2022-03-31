@@ -4,7 +4,11 @@
 # 操作
 
 * 编译
+```sh
   make
-  
+```  
+
 * 烧录
+```sh
   make flash_app
+```
