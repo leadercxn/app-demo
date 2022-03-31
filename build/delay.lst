@@ -1,0 +1,346 @@
+ARM GAS  /var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//ccfFpOe9.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 0
+  10              		.eabi_attribute 18, 4
+  11              		.file	"delay.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.global	__aeabi_uidiv
+  16              		.section	.text.delay_init,"ax",%progbits
+  17              		.align	1
+  18              		.global	delay_init
+  19              		.arch armv6s-m
+  20              		.syntax unified
+  21              		.code	16
+  22              		.thumb_func
+  23              		.fpu softvfp
+  25              	delay_init:
+  26              	.LFB33:
+  27              		.file 1 "Src/delay.c"
+   1:Src/delay.c   **** #include "delay.h"
+   2:Src/delay.c   **** #include "hk32f0xx.h"
+   3:Src/delay.c   **** 
+   4:Src/delay.c   **** static int8_t fac_us = 0;
+   5:Src/delay.c   **** static int16_t fac_ms = 0;
+   6:Src/delay.c   **** 
+   7:Src/delay.c   **** /*******************************************************************************
+   8:Src/delay.c   **** *                           @2017-12-16
+   9:Src/delay.c   **** * Function Name  : delay_init
+  10:Src/delay.c   **** * Description    : 延时函数初始化
+  11:Src/delay.c   **** * Input          : none
+  12:Src/delay.c   **** * Output         : none
+  13:Src/delay.c   **** * Return         : none
+  14:Src/delay.c   **** *                  SYSTICK的时钟固定为HCLK时钟的1/8
+  15:Src/delay.c   **** *                  SYSCLK:系统时钟
+  16:Src/delay.c   **** *******************************************************************************/
+  17:Src/delay.c   **** void delay_init(void)
+  18:Src/delay.c   **** {
+  28              		.loc 1 18 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 10B5     		push	{r4, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 4, -8
+  36              		.cfi_offset 14, -4
+  19:Src/delay.c   ****     SysTick_CLKSourceConfig(SysTick_CLKSource_HCLK_Div8);
+  37              		.loc 1 19 5 view .LVU1
+  38 0002 0520     		movs	r0, #5
+  39 0004 4042     		rsbs	r0, r0, #0
+ARM GAS  /var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//ccfFpOe9.s 			page 2
+
+
+  40 0006 FFF7FEFF 		bl	SysTick_CLKSourceConfig
+  41              	.LVL0:
+  20:Src/delay.c   ****     fac_us = SystemCoreClock/8000000;
+  42              		.loc 1 20 5 view .LVU2
+  43              		.loc 1 20 29 is_stmt 0 view .LVU3
+  44 000a 074B     		ldr	r3, .L2
+  45 000c 1868     		ldr	r0, [r3]
+  46 000e 0749     		ldr	r1, .L2+4
+  47 0010 FFF7FEFF 		bl	__aeabi_uidiv
+  48              	.LVL1:
+  49              		.loc 1 20 12 view .LVU4
+  50 0014 40B2     		sxtb	r0, r0
+  51 0016 064B     		ldr	r3, .L2+8
+  52 0018 1870     		strb	r0, [r3]
+  21:Src/delay.c   ****     fac_ms = (unsigned int)fac_us*1000;
+  53              		.loc 1 21 5 is_stmt 1 view .LVU5
+  54              		.loc 1 21 12 is_stmt 0 view .LVU6
+  55 001a FA23     		movs	r3, #250
+  56 001c 9B00     		lsls	r3, r3, #2
+  57 001e 5843     		muls	r0, r3
+  58 0020 044B     		ldr	r3, .L2+12
+  59 0022 1880     		strh	r0, [r3]
+  22:Src/delay.c   **** }
+  60              		.loc 1 22 1 view .LVU7
+  61              		@ sp needed
+  62 0024 10BD     		pop	{r4, pc}
+  63              	.L3:
+  64 0026 C046     		.align	2
+  65              	.L2:
+  66 0028 00000000 		.word	SystemCoreClock
+  67 002c 00127A00 		.word	8000000
+  68 0030 00000000 		.word	.LANCHOR0
+  69 0034 00000000 		.word	.LANCHOR1
+  70              		.cfi_endproc
+  71              	.LFE33:
+  73              		.section	.text.delay_us,"ax",%progbits
+  74              		.align	1
+  75              		.global	delay_us
+  76              		.syntax unified
+  77              		.code	16
+  78              		.thumb_func
+  79              		.fpu softvfp
+  81              	delay_us:
+  82              	.LVL2:
+  83              	.LFB34:
+  23:Src/delay.c   **** 
+  24:Src/delay.c   **** /*******************************************************************************
+  25:Src/delay.c   **** *                           @2017-12-16
+  26:Src/delay.c   **** * Function Name  : delay_us
+  27:Src/delay.c   **** * Description    : us延时函数
+  28:Src/delay.c   **** * Input          : num--延时时间数值
+  29:Src/delay.c   **** * Output         : none
+  30:Src/delay.c   **** * Return         : none
+  31:Src/delay.c   **** *******************************************************************************/
+  32:Src/delay.c   **** void delay_us(uint32_t nus)
+  33:Src/delay.c   **** {
+  84              		.loc 1 33 1 is_stmt 1 view -0
+ARM GAS  /var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//ccfFpOe9.s 			page 3
+
+
+  85              		.cfi_startproc
+  86              		@ args = 0, pretend = 0, frame = 0
+  87              		@ frame_needed = 0, uses_anonymous_args = 0
+  88              		@ link register save eliminated.
+  34:Src/delay.c   **** 	uint32_t temp;	    	 
+  89              		.loc 1 34 2 view .LVU9
+  35:Src/delay.c   **** 	SysTick->LOAD=nus*fac_us; //时间加载	  		 
+  90              		.loc 1 35 2 view .LVU10
+  91              		.loc 1 35 19 is_stmt 0 view .LVU11
+  92 0000 0C4B     		ldr	r3, .L6
+  93 0002 1B78     		ldrb	r3, [r3]
+  94 0004 5BB2     		sxtb	r3, r3
+  95 0006 5843     		muls	r0, r3
+  96              	.LVL3:
+  97              		.loc 1 35 15 view .LVU12
+  98 0008 0B4B     		ldr	r3, .L6+4
+  99 000a 5860     		str	r0, [r3, #4]
+  36:Src/delay.c   **** 	SysTick->VAL=0x00;        //清空计数器
+ 100              		.loc 1 36 2 is_stmt 1 view .LVU13
+ 101              		.loc 1 36 14 is_stmt 0 view .LVU14
+ 102 000c 0022     		movs	r2, #0
+ 103 000e 9A60     		str	r2, [r3, #8]
+  37:Src/delay.c   **** 	SysTick->CTRL|=SysTick_CTRL_ENABLE_Msk ;          //开始倒数	 
+ 104              		.loc 1 37 2 is_stmt 1 view .LVU15
+ 105              		.loc 1 37 15 is_stmt 0 view .LVU16
+ 106 0010 1A68     		ldr	r2, [r3]
+ 107 0012 0121     		movs	r1, #1
+ 108 0014 0A43     		orrs	r2, r1
+ 109 0016 1A60     		str	r2, [r3]
+ 110              	.L5:
+  38:Src/delay.c   **** 	do
+ 111              		.loc 1 38 2 is_stmt 1 discriminator 1 view .LVU17
+  39:Src/delay.c   **** 	{
+  40:Src/delay.c   **** 		temp=SysTick->CTRL;
+ 112              		.loc 1 40 3 discriminator 1 view .LVU18
+ 113              		.loc 1 40 7 is_stmt 0 discriminator 1 view .LVU19
+ 114 0018 074B     		ldr	r3, .L6+4
+ 115 001a 1B68     		ldr	r3, [r3]
+ 116              	.LVL4:
+  41:Src/delay.c   **** 	}
+  42:Src/delay.c   **** 	while(temp&0x01&&!(temp&(1<<16)));//等待时间到达   
+ 117              		.loc 1 42 7 is_stmt 1 discriminator 1 view .LVU20
+ 118              		.loc 1 42 17 is_stmt 0 discriminator 1 view .LVU21
+ 119 001c 074A     		ldr	r2, .L6+8
+ 120 001e 1340     		ands	r3, r2
+ 121              	.LVL5:
+ 122              		.loc 1 42 2 discriminator 1 view .LVU22
+ 123 0020 012B     		cmp	r3, #1
+ 124 0022 F9D0     		beq	.L5
+  43:Src/delay.c   **** 	SysTick->CTRL&=~SysTick_CTRL_ENABLE_Msk;       //关闭计数器
+ 125              		.loc 1 43 2 is_stmt 1 view .LVU23
+ 126              		.loc 1 43 15 is_stmt 0 view .LVU24
+ 127 0024 044B     		ldr	r3, .L6+4
+ 128 0026 1A68     		ldr	r2, [r3]
+ 129 0028 0121     		movs	r1, #1
+ 130 002a 8A43     		bics	r2, r1
+ 131 002c 1A60     		str	r2, [r3]
+ARM GAS  /var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//ccfFpOe9.s 			page 4
+
+
+  44:Src/delay.c   **** 	SysTick->VAL =0X00;       //清空计数器	  
+ 132              		.loc 1 44 2 is_stmt 1 view .LVU25
+ 133              		.loc 1 44 15 is_stmt 0 view .LVU26
+ 134 002e 0022     		movs	r2, #0
+ 135 0030 9A60     		str	r2, [r3, #8]
+  45:Src/delay.c   **** }
+ 136              		.loc 1 45 1 view .LVU27
+ 137              		@ sp needed
+ 138 0032 7047     		bx	lr
+ 139              	.L7:
+ 140              		.align	2
+ 141              	.L6:
+ 142 0034 00000000 		.word	.LANCHOR0
+ 143 0038 10E000E0 		.word	-536813552
+ 144 003c 01000100 		.word	65537
+ 145              		.cfi_endproc
+ 146              	.LFE34:
+ 148              		.section	.text.delay_ms,"ax",%progbits
+ 149              		.align	1
+ 150              		.global	delay_ms
+ 151              		.syntax unified
+ 152              		.code	16
+ 153              		.thumb_func
+ 154              		.fpu softvfp
+ 156              	delay_ms:
+ 157              	.LVL6:
+ 158              	.LFB35:
+  46:Src/delay.c   **** 
+  47:Src/delay.c   **** /*******************************************************************************
+  48:Src/delay.c   **** *                           @2017-12-16
+  49:Src/delay.c   **** * Function Name  : delay_ms
+  50:Src/delay.c   **** * Description    : 延时nms毫秒时间
+  51:Src/delay.c   ****                   注意nms的范围
+  52:Src/delay.c   ****                   SysTick->LOAD为24位寄存器,所以,最大延时为:
+  53:Src/delay.c   ****                   nms<=0xffffff*8*1000/SYSCLK
+  54:Src/delay.c   ****                   SYSCLK单位为Hz,nms单位为ms
+  55:Src/delay.c   ****                   对32M条件下,nms<=932 
+  56:Src/delay.c   **** * Input          : 
+  57:Src/delay.c   **** * Output         : 
+  58:Src/delay.c   **** * Return         : 
+  59:Src/delay.c   **** *******************************************************************************/
+  60:Src/delay.c   **** void delay_ms(uint16_t nms)
+  61:Src/delay.c   **** {	 		  	  
+ 159              		.loc 1 61 1 is_stmt 1 view -0
+ 160              		.cfi_startproc
+ 161              		@ args = 0, pretend = 0, frame = 0
+ 162              		@ frame_needed = 0, uses_anonymous_args = 0
+ 163              		@ link register save eliminated.
+  62:Src/delay.c   **** 	uint32_t temp;		   
+ 164              		.loc 1 62 2 view .LVU29
+  63:Src/delay.c   **** 	SysTick->LOAD=(uint32_t)nms*fac_ms;//时间加载(SysTick->LOAD为24bit)
+ 165              		.loc 1 63 2 view .LVU30
+ 166              		.loc 1 63 29 is_stmt 0 view .LVU31
+ 167 0000 0C4B     		ldr	r3, .L10
+ 168 0002 0022     		movs	r2, #0
+ 169 0004 9B5E     		ldrsh	r3, [r3, r2]
+ 170 0006 5843     		muls	r0, r3
+ARM GAS  /var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//ccfFpOe9.s 			page 5
+
+
+ 171              	.LVL7:
+ 172              		.loc 1 63 15 view .LVU32
+ 173 0008 0B4B     		ldr	r3, .L10+4
+ 174 000a 5860     		str	r0, [r3, #4]
+  64:Src/delay.c   **** 	SysTick->VAL =0x00;           //清空计数器
+ 175              		.loc 1 64 2 is_stmt 1 view .LVU33
+ 176              		.loc 1 64 15 is_stmt 0 view .LVU34
+ 177 000c 0022     		movs	r2, #0
+ 178 000e 9A60     		str	r2, [r3, #8]
+  65:Src/delay.c   **** 	SysTick->CTRL|=SysTick_CTRL_ENABLE_Msk ;          //开始倒数  
+ 179              		.loc 1 65 2 is_stmt 1 view .LVU35
+ 180              		.loc 1 65 15 is_stmt 0 view .LVU36
+ 181 0010 1A68     		ldr	r2, [r3]
+ 182 0012 0121     		movs	r1, #1
+ 183 0014 0A43     		orrs	r2, r1
+ 184 0016 1A60     		str	r2, [r3]
+ 185              	.L9:
+  66:Src/delay.c   **** 	do
+ 186              		.loc 1 66 2 is_stmt 1 discriminator 1 view .LVU37
+  67:Src/delay.c   **** 	{
+  68:Src/delay.c   **** 		temp=SysTick->CTRL;
+ 187              		.loc 1 68 3 discriminator 1 view .LVU38
+ 188              		.loc 1 68 7 is_stmt 0 discriminator 1 view .LVU39
+ 189 0018 074B     		ldr	r3, .L10+4
+ 190 001a 1B68     		ldr	r3, [r3]
+ 191              	.LVL8:
+  69:Src/delay.c   **** 	}
+  70:Src/delay.c   **** 	while(temp&0x01&&!(temp&(1<<16)));//等待时间到达   
+ 192              		.loc 1 70 7 is_stmt 1 discriminator 1 view .LVU40
+ 193              		.loc 1 70 17 is_stmt 0 discriminator 1 view .LVU41
+ 194 001c 074A     		ldr	r2, .L10+8
+ 195 001e 1340     		ands	r3, r2
+ 196              	.LVL9:
+ 197              		.loc 1 70 2 discriminator 1 view .LVU42
+ 198 0020 012B     		cmp	r3, #1
+ 199 0022 F9D0     		beq	.L9
+  71:Src/delay.c   **** 	SysTick->CTRL&=~SysTick_CTRL_ENABLE_Msk;       //关闭计数器
+ 200              		.loc 1 71 2 is_stmt 1 view .LVU43
+ 201              		.loc 1 71 15 is_stmt 0 view .LVU44
+ 202 0024 044B     		ldr	r3, .L10+4
+ 203 0026 1A68     		ldr	r2, [r3]
+ 204 0028 0121     		movs	r1, #1
+ 205 002a 8A43     		bics	r2, r1
+ 206 002c 1A60     		str	r2, [r3]
+  72:Src/delay.c   **** 	SysTick->VAL =0X00;       //清空计数器	  	    
+ 207              		.loc 1 72 2 is_stmt 1 view .LVU45
+ 208              		.loc 1 72 15 is_stmt 0 view .LVU46
+ 209 002e 0022     		movs	r2, #0
+ 210 0030 9A60     		str	r2, [r3, #8]
+  73:Src/delay.c   **** } 
+ 211              		.loc 1 73 1 view .LVU47
+ 212              		@ sp needed
+ 213 0032 7047     		bx	lr
+ 214              	.L11:
+ 215              		.align	2
+ 216              	.L10:
+ 217 0034 00000000 		.word	.LANCHOR1
+ARM GAS  /var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//ccfFpOe9.s 			page 6
+
+
+ 218 0038 10E000E0 		.word	-536813552
+ 219 003c 01000100 		.word	65537
+ 220              		.cfi_endproc
+ 221              	.LFE35:
+ 223              		.section	.bss.fac_ms,"aw",%nobits
+ 224              		.align	1
+ 225              		.set	.LANCHOR1,. + 0
+ 228              	fac_ms:
+ 229 0000 0000     		.space	2
+ 230              		.section	.bss.fac_us,"aw",%nobits
+ 231              		.set	.LANCHOR0,. + 0
+ 234              	fac_us:
+ 235 0000 00       		.space	1
+ 236              		.text
+ 237              	.Letext0:
+ 238              		.file 2 "/Users/chenxiaonian/tool/gcc-arm-none-eabi-10.3-2021.07-mac-10.14.6/gcc-arm-none-eabi-10.
+ 239              		.file 3 "/Users/chenxiaonian/tool/gcc-arm-none-eabi-10.3-2021.07-mac-10.14.6/gcc-arm-none-eabi-10.
+ 240              		.file 4 "hk_lib/HK32F030/CMSIS/CM0/CoreSupport/core_cm0.h"
+ 241              		.file 5 "hk_lib/HK32F030/CMSIS/CM0/DeviceSupport/system_HK32f0xx.h"
+ 242              		.file 6 "hk_lib/HK32F030/STD_LIB/inc/hk32f0xx_misc.h"
+ARM GAS  /var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//ccfFpOe9.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 delay.c
+/var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//ccfFpOe9.s:17     .text.delay_init:0000000000000000 $t
+/var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//ccfFpOe9.s:25     .text.delay_init:0000000000000000 delay_init
+/var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//ccfFpOe9.s:66     .text.delay_init:0000000000000028 $d
+/var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//ccfFpOe9.s:74     .text.delay_us:0000000000000000 $t
+/var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//ccfFpOe9.s:81     .text.delay_us:0000000000000000 delay_us
+/var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//ccfFpOe9.s:142    .text.delay_us:0000000000000034 $d
+/var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//ccfFpOe9.s:149    .text.delay_ms:0000000000000000 $t
+/var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//ccfFpOe9.s:156    .text.delay_ms:0000000000000000 delay_ms
+/var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//ccfFpOe9.s:217    .text.delay_ms:0000000000000034 $d
+/var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//ccfFpOe9.s:224    .bss.fac_ms:0000000000000000 $d
+/var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//ccfFpOe9.s:228    .bss.fac_ms:0000000000000000 fac_ms
+/var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//ccfFpOe9.s:234    .bss.fac_us:0000000000000000 fac_us
+/var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//ccfFpOe9.s:235    .bss.fac_us:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+__aeabi_uidiv
+SysTick_CLKSourceConfig
+SystemCoreClock

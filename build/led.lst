@@ -1,0 +1,227 @@
+ARM GAS  /var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//cc19Y7QB.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 0
+  10              		.eabi_attribute 18, 4
+  11              		.file	"led.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.Led_On,"ax",%progbits
+  16              		.align	1
+  17              		.global	Led_On
+  18              		.arch armv6s-m
+  19              		.syntax unified
+  20              		.code	16
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	Led_On:
+  25              	.LFB34:
+  26              		.file 1 "Src/led.c"
+   1:Src/led.c     **** #include "led.h"
+   2:Src/led.c     **** #include "hk32f0xx_gpio.h"
+   3:Src/led.c     **** #include "hk32f0xx_rcc.h"
+   4:Src/led.c     **** 
+   5:Src/led.c     **** void Led_Init(void)
+   6:Src/led.c     **** {
+   7:Src/led.c     ****   GPIO_InitTypeDef GPIO_InitStructure;
+   8:Src/led.c     **** 
+   9:Src/led.c     ****   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC,ENABLE);
+  10:Src/led.c     **** 
+  11:Src/led.c     ****   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13;
+  12:Src/led.c     ****   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+  13:Src/led.c     ****   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  14:Src/led.c     ****   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  15:Src/led.c     **** 
+  16:Src/led.c     ****   GPIO_Init(GPIOC, &GPIO_InitStructure);
+  17:Src/led.c     ****   
+  18:Src/led.c     ****   Led_Off();
+  19:Src/led.c     **** }
+  20:Src/led.c     **** 
+  21:Src/led.c     **** void Led_On(void)
+  22:Src/led.c     **** {
+  27              		.loc 1 22 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31 0000 10B5     		push	{r4, lr}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 4, -8
+  35              		.cfi_offset 14, -4
+  23:Src/led.c     ****     GPIO_ResetBits(GPIOC,GPIO_Pin_13);
+ARM GAS  /var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//cc19Y7QB.s 			page 2
+
+
+  36              		.loc 1 23 5 view .LVU1
+  37 0002 8021     		movs	r1, #128
+  38 0004 8901     		lsls	r1, r1, #6
+  39 0006 0248     		ldr	r0, .L2
+  40 0008 FFF7FEFF 		bl	GPIO_ResetBits
+  41              	.LVL0:
+  24:Src/led.c     **** }
+  42              		.loc 1 24 1 is_stmt 0 view .LVU2
+  43              		@ sp needed
+  44 000c 10BD     		pop	{r4, pc}
+  45              	.L3:
+  46 000e C046     		.align	2
+  47              	.L2:
+  48 0010 00080048 		.word	1207961600
+  49              		.cfi_endproc
+  50              	.LFE34:
+  52              		.section	.text.Led_Off,"ax",%progbits
+  53              		.align	1
+  54              		.global	Led_Off
+  55              		.syntax unified
+  56              		.code	16
+  57              		.thumb_func
+  58              		.fpu softvfp
+  60              	Led_Off:
+  61              	.LFB35:
+  25:Src/led.c     **** 
+  26:Src/led.c     **** void Led_Off(void)
+  27:Src/led.c     **** {
+  62              		.loc 1 27 1 is_stmt 1 view -0
+  63              		.cfi_startproc
+  64              		@ args = 0, pretend = 0, frame = 0
+  65              		@ frame_needed = 0, uses_anonymous_args = 0
+  66 0000 10B5     		push	{r4, lr}
+  67              	.LCFI1:
+  68              		.cfi_def_cfa_offset 8
+  69              		.cfi_offset 4, -8
+  70              		.cfi_offset 14, -4
+  28:Src/led.c     ****     GPIO_SetBits(GPIOC,GPIO_Pin_13);
+  71              		.loc 1 28 5 view .LVU4
+  72 0002 8021     		movs	r1, #128
+  73 0004 8901     		lsls	r1, r1, #6
+  74 0006 0248     		ldr	r0, .L5
+  75 0008 FFF7FEFF 		bl	GPIO_SetBits
+  76              	.LVL1:
+  29:Src/led.c     **** }
+  77              		.loc 1 29 1 is_stmt 0 view .LVU5
+  78              		@ sp needed
+  79 000c 10BD     		pop	{r4, pc}
+  80              	.L6:
+  81 000e C046     		.align	2
+  82              	.L5:
+  83 0010 00080048 		.word	1207961600
+  84              		.cfi_endproc
+  85              	.LFE35:
+  87              		.section	.text.Led_Init,"ax",%progbits
+  88              		.align	1
+  89              		.global	Led_Init
+ARM GAS  /var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//cc19Y7QB.s 			page 3
+
+
+  90              		.syntax unified
+  91              		.code	16
+  92              		.thumb_func
+  93              		.fpu softvfp
+  95              	Led_Init:
+  96              	.LFB33:
+   6:Src/led.c     ****   GPIO_InitTypeDef GPIO_InitStructure;
+  97              		.loc 1 6 1 is_stmt 1 view -0
+  98              		.cfi_startproc
+  99              		@ args = 0, pretend = 0, frame = 8
+ 100              		@ frame_needed = 0, uses_anonymous_args = 0
+ 101 0000 00B5     		push	{lr}
+ 102              	.LCFI2:
+ 103              		.cfi_def_cfa_offset 4
+ 104              		.cfi_offset 14, -4
+ 105 0002 83B0     		sub	sp, sp, #12
+ 106              	.LCFI3:
+ 107              		.cfi_def_cfa_offset 16
+   7:Src/led.c     **** 
+ 108              		.loc 1 7 3 view .LVU7
+   9:Src/led.c     **** 
+ 109              		.loc 1 9 3 view .LVU8
+ 110 0004 8020     		movs	r0, #128
+ 111 0006 0121     		movs	r1, #1
+ 112 0008 0003     		lsls	r0, r0, #12
+ 113 000a FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
+ 114              	.LVL2:
+  11:Src/led.c     ****   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+ 115              		.loc 1 11 3 view .LVU9
+  11:Src/led.c     ****   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+ 116              		.loc 1 11 31 is_stmt 0 view .LVU10
+ 117 000e 8023     		movs	r3, #128
+ 118 0010 9B01     		lsls	r3, r3, #6
+ 119 0012 0093     		str	r3, [sp]
+  12:Src/led.c     ****   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+ 120              		.loc 1 12 3 is_stmt 1 view .LVU11
+  12:Src/led.c     ****   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+ 121              		.loc 1 12 32 is_stmt 0 view .LVU12
+ 122 0014 0123     		movs	r3, #1
+ 123 0016 6A46     		mov	r2, sp
+ 124 0018 1371     		strb	r3, [r2, #4]
+  13:Src/led.c     ****   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 125              		.loc 1 13 3 is_stmt 1 view .LVU13
+  13:Src/led.c     ****   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 126              		.loc 1 13 33 is_stmt 0 view .LVU14
+ 127 001a 0023     		movs	r3, #0
+ 128 001c 9371     		strb	r3, [r2, #6]
+  14:Src/led.c     **** 
+ 129              		.loc 1 14 3 is_stmt 1 view .LVU15
+  14:Src/led.c     **** 
+ 130              		.loc 1 14 33 is_stmt 0 view .LVU16
+ 131 001e 0333     		adds	r3, r3, #3
+ 132 0020 5371     		strb	r3, [r2, #5]
+  16:Src/led.c     ****   
+ 133              		.loc 1 16 3 is_stmt 1 view .LVU17
+ 134 0022 6946     		mov	r1, sp
+ 135 0024 0348     		ldr	r0, .L8
+ARM GAS  /var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//cc19Y7QB.s 			page 4
+
+
+ 136 0026 FFF7FEFF 		bl	GPIO_Init
+ 137              	.LVL3:
+  18:Src/led.c     **** }
+ 138              		.loc 1 18 3 view .LVU18
+ 139 002a FFF7FEFF 		bl	Led_Off
+ 140              	.LVL4:
+  19:Src/led.c     **** 
+ 141              		.loc 1 19 1 is_stmt 0 view .LVU19
+ 142 002e 03B0     		add	sp, sp, #12
+ 143              		@ sp needed
+ 144 0030 00BD     		pop	{pc}
+ 145              	.L9:
+ 146 0032 C046     		.align	2
+ 147              	.L8:
+ 148 0034 00080048 		.word	1207961600
+ 149              		.cfi_endproc
+ 150              	.LFE33:
+ 152              		.text
+ 153              	.Letext0:
+ 154              		.file 2 "/Users/chenxiaonian/tool/gcc-arm-none-eabi-10.3-2021.07-mac-10.14.6/gcc-arm-none-eabi-10.
+ 155              		.file 3 "/Users/chenxiaonian/tool/gcc-arm-none-eabi-10.3-2021.07-mac-10.14.6/gcc-arm-none-eabi-10.
+ 156              		.file 4 "hk_lib/HK32F030/CMSIS/CM0/DeviceSupport/hk32f0xx.h"
+ 157              		.file 5 "hk_lib/HK32F030/STD_LIB/inc/hk32f0xx_gpio.h"
+ 158              		.file 6 "hk_lib/HK32F030/STD_LIB/inc/hk32f0xx_rcc.h"
+ARM GAS  /var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//cc19Y7QB.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 led.c
+/var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//cc19Y7QB.s:16     .text.Led_On:0000000000000000 $t
+/var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//cc19Y7QB.s:24     .text.Led_On:0000000000000000 Led_On
+/var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//cc19Y7QB.s:48     .text.Led_On:0000000000000010 $d
+/var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//cc19Y7QB.s:53     .text.Led_Off:0000000000000000 $t
+/var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//cc19Y7QB.s:60     .text.Led_Off:0000000000000000 Led_Off
+/var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//cc19Y7QB.s:83     .text.Led_Off:0000000000000010 $d
+/var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//cc19Y7QB.s:88     .text.Led_Init:0000000000000000 $t
+/var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//cc19Y7QB.s:95     .text.Led_Init:0000000000000000 Led_Init
+/var/folders/ww/rl_brt8s5pq2m4_0c4ltm8d00000gn/T//cc19Y7QB.s:148    .text.Led_Init:0000000000000034 $d
+
+UNDEFINED SYMBOLS
+GPIO_ResetBits
+GPIO_SetBits
+RCC_AHBPeriphClockCmd
+GPIO_Init
