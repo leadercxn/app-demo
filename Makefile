@@ -1,25 +1,17 @@
-######################################
-# target
-######################################
 TARGET = app
 
-
-######################################
-# building variables
-######################################
-# debug build?
 DEBUG = 1
 # optimization
 OPT = -O3 -g
 
+$(shell python preBuild.py)
+VERSION = $(shell python getVersion.py)_$(shell git rev-parse --short HEAD)
 
-#######################################
-# paths
-#######################################
 # Build path
 BUILD_DIR = build
 
-include custom.mk
+# sdk path
+SDK_DIR = ../sdk
 
 ######################################
 # source
@@ -30,17 +22,17 @@ Src/main.c \
 Src/delay.c \
 Src/hk32f0xx_it.c  \
 Src/led.c  \
-hk_lib/HK32F030/STD_LIB/src/hk32f0xx_gpio.c	\
-hk_lib/HK32F030/STD_LIB/src/hk32f0xx_misc.c	\
-hk_lib/HK32F030/STD_LIB/src/hk32f0xx_rcc.c	\
-hk_lib/HK32F030/CMSIS/CM0/DeviceSupport/system_hk32f0xx.c
+$(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_gpio.c	\
+$(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_misc.c	\
+$(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_rcc.c	\
+$(SDK_DIR)/platform/hk/HK32F030/CMSIS/CM0/DeviceSupport/system_hk32f0xx.c
 
 # C includes
 C_INCLUDES =  \
 -ISrc \
--Ihk_lib/HK32F030/STD_LIB/inc \
--Ihk_lib/HK32F030/CMSIS/CM0/DeviceSupport \
--Ihk_lib/HK32F030/CMSIS/CM0/CoreSupport
+-I$(SDK_DIR)/platform/hk/HK32F030/STD_LIB/inc \
+-I$(SDK_DIR)/platform/hk/HK32F030/CMSIS/CM0/DeviceSupport \
+-I$(SDK_DIR)/platform/hk/HK32F030/CMSIS/CM0/CoreSupport
 
 # ASM sources
 ASM_SOURCES =  \
@@ -75,6 +67,12 @@ BIN = $(CP) -O binary -S
 # LD = armlink
 # AR = armar
 
+
+# LOG Message
+$(info VERSION: $(VERSION))
+$(info sdk path: $(SDK_DIR))
+
+
 #######################################
 # CFLAGS
 #######################################
@@ -97,7 +95,8 @@ AS_DEFS =
 # C 宏
 C_DEFS =  \
 -DUSE_STDPERIPH_DRIVER \
--DHK32F030
+-DHK32F030 \
+-DVERSION="${VERSION}"
 
 
 
@@ -175,7 +174,6 @@ clean:
 -include $(wildcard $(BUILD_DIR)/*.d)
 
 
-flash_app:
-	openocd -f scripts/openocd/stm32f030_jlink.cfg -c init -c targets -c 'reset halt' -c 'flash write_image erase build/app.hex' -c 'reset halt' -c 'verify_image build/app.hex' -c 'reset run' -c shutdown
+include cmd.mk
 
 # *** EOF ***

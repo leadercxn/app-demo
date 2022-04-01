@@ -47,9 +47,9 @@ int main(void)
   while (1)
   {
     Led_On();
-    delay_ms(50);
+    delay_ms(100);
     Led_Off();
-    delay_ms(1000);
+    delay_ms(2000);
   }
 }
  
