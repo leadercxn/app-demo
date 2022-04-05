@@ -10,5 +10,5 @@
 
 * 烧录
 ```sh
-  make flash_app
+  make flash
 ```

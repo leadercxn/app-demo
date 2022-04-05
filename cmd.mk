@@ -20,3 +20,7 @@ gdbs:
 
 gdb:
 	arm-none-eabi-gdb $(BUILD_DIR)/$(TARGET).elf -ex 'target remote localhost:3333' -ex 'monitor reset halt' -ex 'load'
+
+menuconfig:
+	@$(MAKE) -f $(SDK_DIR)/scripts/menuconfig/Makefile $@
+

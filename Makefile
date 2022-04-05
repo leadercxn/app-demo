@@ -13,6 +13,21 @@ BUILD_DIR = build
 # sdk path
 SDK_DIR = ../sdk
 
+
+# 系统平台
+ifeq ($(OS),Windows_NT)
+	PLATFORM="Windows"
+else
+	ifeq ($(shell uname),Darwin)
+  		PLATFORM="MacOS"
+ 	else
+  		PLATFORM="Unix-Like"
+ 	endif
+endif
+
+$(info PLATFORM: $(PLATFORM))
+
+
 ######################################
 # source
 ######################################
