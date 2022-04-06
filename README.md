@@ -3,6 +3,11 @@
 
 # 操作
 
+* 拉取sdk仓库
+```sh
+  git submodule update --init --recursive
+```
+
 * 编译
 ```sh
   make

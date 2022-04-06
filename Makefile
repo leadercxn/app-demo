@@ -4,15 +4,15 @@ DEBUG = 1
 # optimization
 OPT = -O3 -g
 
-$(shell python preBuild.py)
-VERSION = $(shell python getVersion.py)_$(shell git rev-parse --short HEAD)
-
 # Build path
 BUILD_DIR = build
 
 # sdk path
 SDK_DIR = sdk
 
+
+$(shell python $(SDK_DIR)/scripts/preBuild.py)
+VERSION = $(shell python $(SDK_DIR)/scripts/getVersion.py)_$(shell git rev-parse --short HEAD)
 
 # 系统平台
 ifeq ($(OS),Windows_NT)
