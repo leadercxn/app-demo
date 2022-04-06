@@ -11,7 +11,7 @@ VERSION = $(shell python getVersion.py)_$(shell git rev-parse --short HEAD)
 BUILD_DIR = build
 
 # sdk path
-SDK_DIR = ../sdk
+SDK_DIR = sdk
 
 
 # 系统平台
