@@ -1,7 +1,7 @@
 # 烧录
-flash: $(BUILD_DIR)/$(TARGET).hex
+flash: $(BUILD_DIR)/$(TARGET)_$(VERSION)_$(TIMESTAMP).hex
 	@echo Download program
-	openocd -f $(SDK_DIR)/scripts/openocd/stm32f030_jlink.cfg -c init -c targets -c 'reset halt' -c 'flash write_image erase $(BUILD_DIR)/$(TARGET).hex' -c 'reset halt' -c 'verify_image $(BUILD_DIR)/$(TARGET).hex' -c 'reset run' -c shutdown
+	openocd -f $(SDK_DIR)/scripts/openocd/stm32f030_jlink.cfg -c init -c targets -c 'reset halt' -c 'flash write_image erase $(BUILD_DIR)/$(TARGET)_$(VERSION)_$(TIMESTAMP).hex' -c 'reset halt' -c 'verify_image $(BUILD_DIR)/$(TARGET)_$(VERSION)_$(TIMESTAMP).hex' -c 'reset run' -c shutdown
 
 reset:
 	openocd -f $(SDK_DIR)/scripts/openocd/stm32f030_jlink.cfg -c init -c targets -c 'reset run' -c shutdown

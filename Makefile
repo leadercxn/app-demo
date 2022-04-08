@@ -6,13 +6,15 @@ OPT = -O3 -g
 
 # Build path
 BUILD_DIR = build
+SDK_DIR   = sdk
 
-# sdk path
-SDK_DIR = sdk
-
-
+# 版本脚本
 $(shell python $(SDK_DIR)/scripts/preBuild.py)
 VERSION = $(shell python $(SDK_DIR)/scripts/getVersion.py)_$(shell git rev-parse --short HEAD)
+
+# 时间戳
+TIMESTAMP = $(shell date +%Y%m%d%H%M)
+
 
 # 系统平台
 ifeq ($(OS),Windows_NT)
@@ -33,10 +35,10 @@ $(info PLATFORM: $(PLATFORM))
 ######################################
 # C sources
 C_SOURCES =  \
-Src/main.c \
-Src/delay.c \
-Src/hk32f0xx_it.c  \
-Src/led.c  \
+src/main.c \
+src/delay.c \
+src/hk32f0xx_it.c  \
+src/led.c  \
 $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_gpio.c	\
 $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_misc.c	\
 $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_rcc.c	\
@@ -44,14 +46,17 @@ $(SDK_DIR)/platform/hk/HK32F030/CMSIS/CM0/DeviceSupport/system_hk32f0xx.c
 
 # C includes
 C_INCLUDES =  \
--ISrc \
+-Isrc \
+-Ibsp \
+-Icore \
+-Ihandler \
 -I$(SDK_DIR)/platform/hk/HK32F030/STD_LIB/inc \
 -I$(SDK_DIR)/platform/hk/HK32F030/CMSIS/CM0/DeviceSupport \
 -I$(SDK_DIR)/platform/hk/HK32F030/CMSIS/CM0/CoreSupport
 
 # ASM sources
 ASM_SOURCES =  \
-startup_hk32f030x8_gcc.s
+configs/startup_hk32f030x8_gcc.s
 
 
 
@@ -86,6 +91,7 @@ BIN = $(CP) -O binary -S
 # LOG Message
 $(info VERSION: $(VERSION))
 $(info sdk path: $(SDK_DIR))
+$(info TIMESTAMP: $(TIMESTAMP))
 
 
 #######################################
@@ -111,7 +117,8 @@ AS_DEFS =
 C_DEFS =  \
 -DUSE_STDPERIPH_DRIVER \
 -DHK32F030 \
--DVERSION="${VERSION}"
+-DVERSION="${VERSION}"	\
+-DBOARD_V001
 
 
 
@@ -137,7 +144,7 @@ CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
 # LDFLAGS
 #######################################
 # link script
-LDSCRIPT = STM32F030C8Tx_FLASH.ld
+LDSCRIPT = configs/STM32F030C8Tx_FLASH.ld
 
 # libraries
 LIBS = -lc -lm -lnosys 
@@ -145,7 +152,7 @@ LIBDIR =
 LDFLAGS = $(MCU) -specs=nano.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
 
 # default action: build all
-all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
+all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET)_$(VERSION)_$(TIMESTAMP).hex $(BUILD_DIR)/$(TARGET)_$(VERSION)_$(TIMESTAMP).bin
 
 
 #######################################
@@ -168,10 +175,10 @@ $(BUILD_DIR)/$(TARGET).elf: $(OBJECTS) Makefile
 	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
 	$(SZ) $@
 
-$(BUILD_DIR)/%.hex: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
+$(BUILD_DIR)/$(TARGET)_$(VERSION)_$(TIMESTAMP).hex: $(BUILD_DIR)/$(TARGET).elf | $(BUILD_DIR)
 	$(HEX) $< $@
 	
-$(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
+$(BUILD_DIR)/$(TARGET)_$(VERSION)_$(TIMESTAMP).bin: $(BUILD_DIR)/$(TARGET).elf | $(BUILD_DIR)
 	$(BIN) $< $@	
 	
 $(BUILD_DIR):
