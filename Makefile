@@ -34,15 +34,13 @@ $(info PLATFORM: $(PLATFORM))
 # source
 ######################################
 # C sources
-C_SOURCES =  \
-src/main.c \
-src/delay.c \
-src/hk32f0xx_it.c  \
-src/led.c  \
+C_SOURCES =  			\
+src/main.c 				\
+src/hk32f0xx_it.c  		\
+core/system_hk32f0xx.c	\
 $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_gpio.c	\
 $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_misc.c	\
-$(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_rcc.c	\
-$(SDK_DIR)/platform/hk/HK32F030/CMSIS/CM0/DeviceSupport/system_hk32f0xx.c
+$(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_rcc.c
 
 # C includes
 C_INCLUDES =  \
@@ -56,7 +54,7 @@ C_INCLUDES =  \
 
 # ASM sources
 ASM_SOURCES =  \
-configs/startup_hk32f030x8_gcc.s
+linker/startup_hk32f030x8_gcc.s
 
 
 
@@ -144,7 +142,7 @@ CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
 # LDFLAGS
 #######################################
 # link script
-LDSCRIPT = configs/STM32F030C8Tx_FLASH.ld
+LDSCRIPT = linker/STM32F030C8Tx_FLASH.ld
 
 # libraries
 LIBS = -lc -lm -lnosys 
