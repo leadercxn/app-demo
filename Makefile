@@ -6,7 +6,14 @@ OPT = -O3 -g
 
 # Build path
 BUILD_DIR = build
-SDK_DIR   = sdk
+
+# sdk
+SDK_DIR   = ../sdk
+SDK_BRANCH = master
+ifeq ($(SDK_DIR), $(wildcard $(SDK_DIR)))
+else
+$(shell cd ../ && git clone -b $(SDK_BRANCH) git@github.com:leadercxn/sdk.git)
+endif
 
 # 版本脚本
 $(shell python $(SDK_DIR)/scripts/preBuild.py)
@@ -150,7 +157,7 @@ LIBDIR =
 LDFLAGS = $(MCU) -specs=nano.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
 
 # default action: build all
-all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET)_$(VERSION)_$(TIMESTAMP).hex $(BUILD_DIR)/$(TARGET)_$(VERSION)_$(TIMESTAMP).bin
+all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
 
 
 #######################################
@@ -173,10 +180,10 @@ $(BUILD_DIR)/$(TARGET).elf: $(OBJECTS) Makefile
 	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
 	$(SZ) $@
 
-$(BUILD_DIR)/$(TARGET)_$(VERSION)_$(TIMESTAMP).hex: $(BUILD_DIR)/$(TARGET).elf | $(BUILD_DIR)
+$(BUILD_DIR)/$(TARGET).hex: $(BUILD_DIR)/$(TARGET).elf | $(BUILD_DIR)
 	$(HEX) $< $@
 	
-$(BUILD_DIR)/$(TARGET)_$(VERSION)_$(TIMESTAMP).bin: $(BUILD_DIR)/$(TARGET).elf | $(BUILD_DIR)
+$(BUILD_DIR)/$(TARGET).bin: $(BUILD_DIR)/$(TARGET).elf | $(BUILD_DIR)
 	$(BIN) $< $@	
 	
 $(BUILD_DIR):

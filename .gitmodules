@@ -1,5 +1,0 @@
-[submodule "sdk"]
-	path = sdk
-	url = git@github.com:leadercxn/sdk.git
-	branch = master
-

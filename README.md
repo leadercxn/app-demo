@@ -3,11 +3,6 @@
 
 # 操作
 
-* 拉取sdk仓库
-```sh
-  git submodule update --init --recursive
-```
-
 * 编译
 ```sh
   make
@@ -17,3 +12,9 @@
 ```sh
   make flash
 ```
+
+* 发布固件
+```sh
+  make release
+```
+
