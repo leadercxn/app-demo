@@ -48,7 +48,11 @@ usart_object_t g_usart_object = {
 
   .usart_ops = {
       .usart_init = hk_uart_obj_init,
+#if defined(__CC_ARM) || defined(__ICCARM__)    //armcc
       .usart_put = hk_uart_obj_put,
+#elif defined(__GNUC__)   
+      .usart_write = hk_uart_obj_put,
+#endif
   }
 };
 
