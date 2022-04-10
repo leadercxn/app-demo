@@ -43,11 +43,17 @@ $(info PLATFORM: $(PLATFORM))
 # C sources
 C_SOURCES =  			\
 src/main.c 				\
+src/hk_peripheral.c 	\
 src/hk32f0xx_it.c  		\
 core/system_hk32f0xx.c	\
 $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_gpio.c	\
 $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_misc.c	\
-$(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_rcc.c
+$(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_rcc.c	\
+$(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_usart.c	\
+$(SDK_DIR)/components/trace/trace.c	\
+$(SDK_DIR)/customized/hal/usart/retarget.c	\
+$(SDK_DIR)/customized/hk_lib/f0/usart/hk_usart.c	\
+$(SDK_DIR)/customized/hk_lib/f0/gpio/hk_gpio.c
 
 # C includes
 C_INCLUDES =  \
@@ -57,12 +63,32 @@ C_INCLUDES =  \
 -Ihandler \
 -I$(SDK_DIR)/platform/hk/HK32F030/STD_LIB/inc \
 -I$(SDK_DIR)/platform/hk/HK32F030/CMSIS/CM0/DeviceSupport \
--I$(SDK_DIR)/platform/hk/HK32F030/CMSIS/CM0/CoreSupport
+-I$(SDK_DIR)/platform/hk/HK32F030/CMSIS/CM0/CoreSupport	\
+-I$(SDK_DIR)/components/util	\
+-I$(SDK_DIR)/components/lib_err	\
+-I$(SDK_DIR)/customized/hal/gpio	\
+-I$(SDK_DIR)/customized/hal/systick	\
+-I$(SDK_DIR)/customized/hal/usart	\
+-I$(SDK_DIR)/customized/hk_lib/f0/usart	\
+-I$(SDK_DIR)/customized/hk_lib/f0/gpio	\
+-I$(SDK_DIR)/components/trace
 
 # ASM sources
 ASM_SOURCES =  \
 linker/startup_hk32f030x8_gcc.s
 
+# macros for gcc
+# AS defines
+AS_DEFS = 
+
+# C 宏
+C_DEFS =  \
+-DUSE_STDPERIPH_DRIVER \
+-DHK32F030 \
+-DVERSION="${VERSION}"	\
+-DBOARD_V001	\
+-DTRACE_ENABLE	\
+-DTRACE_LEVEL=5
 
 
 #######################################
@@ -113,17 +139,6 @@ CPU = -mcpu=cortex-m0
 
 # mcu
 MCU = $(CPU) -mthumb $(FPU) $(FLOAT-ABI)
-
-# macros for gcc
-# AS defines
-AS_DEFS = 
-
-# C 宏
-C_DEFS =  \
--DUSE_STDPERIPH_DRIVER \
--DHK32F030 \
--DVERSION="${VERSION}"	\
--DBOARD_V001
 
 
 

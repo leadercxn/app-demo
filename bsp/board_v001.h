@@ -4,9 +4,9 @@
 #include "hk32f0xx.h"
 
 /* GPIO */
-#define LED_PIN              GPIO_Pin_13
-#define LED_PORT             GPIOC
-#define LED_PORT_PERIPH_CLK  RCC_AHBPeriph_GPIOC
+#define LED_PIN                             GPIO_Pin_13
+#define LED_PORT                            GPIOC
+#define LED_PORT_PERIPH_CLK                 RCC_AHBPeriph_GPIOC
 
 #define KT0646_EN_PIN                       GPIO_Pin_13                 
 #define KT0646_EN_GPIO_PORT                 GPIOB                       
@@ -37,7 +37,6 @@
 #define TRACE_UART_RX_AF                    GPIO_AF_1
 
 /* I2C */
-
 #define VIRT1_SCL_PIN                       GPIO_Pin_12                  /* 模拟I2C-SCL */
 #define VIRT1_SCL_GPIO_PORT                 GPIOB                        /* GPIOB */
 #define VIRT1_SCL_GPIO_CLK                  RCC_AHBPeriph_GPIOB
@@ -52,6 +51,5 @@
 #define VIRT2_SDA_PIN                       GPIO_Pin_4                   /* 模拟I2C2-SDA */
 #define VIRT2_SDA_GPIO_PORT                 GPIOA                        /* GPIOA */
 #define VIRT2_SDA_GPIO_CLK                  RCC_AHBPeriph_GPIOA
-
 
 #endif
