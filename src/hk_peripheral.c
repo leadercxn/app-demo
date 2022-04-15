@@ -5,11 +5,12 @@
 #include "hk_usart.h"
 #include "gpio.h"
 #include "hk_gpio.h"
-
-
+#include "systick.h"
+#include "hk_systick.h"
 
 #include "hk_peripheral.h"
 
+// 串口obj赋值
 hk_uart_info_t g_hk_uart_info = {
     .uart = USART1,
     .tx_port = TRACE_UART_TX_GPIO_PORT,
@@ -39,7 +40,6 @@ hk_uart_config_t g_hk_uart_config = {
     .interrupt_priority = 0,
 };
 
-// 串口obj赋值
 usart_object_t g_usart_object = {
   .usart_cfg = {
       .p_pin_cfg = (void *)&g_hk_uart_info,
@@ -56,6 +56,8 @@ usart_object_t g_usart_object = {
   }
 };
 
+
+// led obj
 gpio_object_t g_led_obj = {
     .gpio_cfg = {
         .gpio_clk = RCC_AHBPeriph_GPIOC,
@@ -71,6 +73,18 @@ gpio_object_t g_led_obj = {
 };
 
 
+
+// systick
+systick_cfg_t g_systick_cfg = {
+    .clk_div = SysTick_CLKSource_HCLK_Div8,
+    .ticks_per_us = 9,
+};
+
+systick_ops_t g_systick_ops = {
+    .systick_init = ,
+    .delay_ms = ,
+    .delay_us = ,
+};
 
 
 

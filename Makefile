@@ -53,7 +53,8 @@ $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_usart.c	\
 $(SDK_DIR)/components/trace/trace.c	\
 $(SDK_DIR)/customized/hal/usart/retarget.c	\
 $(SDK_DIR)/customized/hk_lib/f0/usart/hk_usart.c	\
-$(SDK_DIR)/customized/hk_lib/f0/gpio/hk_gpio.c
+$(SDK_DIR)/customized/hk_lib/f0/gpio/hk_gpio.c	\
+$(SDK_DIR)/customized/hk_lib/f0/systick/hk_systick.c
 
 # C includes
 C_INCLUDES =  \
@@ -71,6 +72,7 @@ C_INCLUDES =  \
 -I$(SDK_DIR)/customized/hal/usart	\
 -I$(SDK_DIR)/customized/hk_lib/f0/usart	\
 -I$(SDK_DIR)/customized/hk_lib/f0/gpio	\
+-I$(SDK_DIR)/customized/hk_lib/f0/systick	\
 -I$(SDK_DIR)/components/trace
 
 # ASM sources
@@ -215,6 +217,8 @@ clean:
 #######################################
 -include $(wildcard $(BUILD_DIR)/*.d)
 
+SDK_CONFIG_FILE := bsp/config.h
+CMSIS_CONFIG_TOOL := $(SDK_DIR)/scripts/cmsisconfig/CMSIS_Configuration_Wizard.jar
 
 include cmd.mk
 

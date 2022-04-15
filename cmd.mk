@@ -25,3 +25,5 @@ release:
 	cp $(BUILD_DIR)/$(TARGET).hex  $(BUILD_DIR)/$(TARGET)_$(VERSION)_$(TIMESTAMP).hex
 	cp $(BUILD_DIR)/$(TARGET).bin  $(BUILD_DIR)/$(TARGET)_$(VERSION)_$(TIMESTAMP).bin
 
+config:
+	java -jar $(CMSIS_CONFIG_TOOL) $(SDK_CONFIG_FILE)
