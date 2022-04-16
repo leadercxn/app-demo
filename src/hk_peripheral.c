@@ -52,6 +52,8 @@ usart_object_t g_usart_object = {
       .usart_put = hk_uart_obj_put,
 #elif defined(__GNUC__)   
       .usart_write = hk_uart_obj_put,
+      .usart_write_buffer = hk_uart_obj_puts,
+      .usart_read_buffer  = hk_uart_obj_gets,
 #endif
   }
 };
@@ -75,17 +77,19 @@ gpio_object_t g_led_obj = {
 
 
 // systick
-systick_cfg_t g_systick_cfg = {
-    .clk_div = SysTick_CLKSource_HCLK_Div8,
-    .ticks_per_us = 9,
+systick_object_t g_systick_obj = {
+    .systick_cfg = {
+        .clk_div = SysTick_CLKSource_HCLK_Div8,
+        .ticks_per_us = 9,
+        .ticks_per_sec = 1000,
+    },
+
+    .systick_ops = {
+        .systick_init = hk_systick_init_rebuild,
+        .delay_ms = hk_delay_ms_rebuild,
+        .delay_us = hk_delay_us_rebuild,
+        .systick_get = hk_systick_get,
+    },
 };
-
-systick_ops_t g_systick_ops = {
-    .systick_init = ,
-    .delay_ms = ,
-    .delay_us = ,
-};
-
-
 
 

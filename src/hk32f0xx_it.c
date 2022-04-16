@@ -71,7 +71,7 @@ void PendSV_Handler(void)
   * @param  None
   * @retval None
   */
-void SysTick_Handler(void)
+__attribute__((weak)) void SysTick_Handler(void)
 {
 }
 

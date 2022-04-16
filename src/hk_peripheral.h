@@ -3,9 +3,10 @@
 
 #include "usart.h"
 #include "gpio.h"
+#include "systick.h"
 
 extern usart_object_t g_usart_object;
-extern gpio_object_t g_led_obj;
-
+extern gpio_object_t  g_led_obj;
+extern systick_object_t g_systick_obj;
 
 #endif

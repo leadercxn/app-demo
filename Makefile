@@ -51,6 +51,11 @@ $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_misc.c	\
 $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_rcc.c	\
 $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_usart.c	\
 $(SDK_DIR)/components/trace/trace.c	\
+$(SDK_DIR)/components/letter-shell/src/shell_cmd_list.c	\
+$(SDK_DIR)/components/letter-shell/src/shell_companion.c	\
+$(SDK_DIR)/components/letter-shell/src/shell_ext.c	\
+$(SDK_DIR)/components/letter-shell/src/shell.c	\
+$(SDK_DIR)/customized/hal/letter_shell/letter_handler.c \
 $(SDK_DIR)/customized/hal/usart/retarget.c	\
 $(SDK_DIR)/customized/hk_lib/f0/usart/hk_usart.c	\
 $(SDK_DIR)/customized/hk_lib/f0/gpio/hk_gpio.c	\
@@ -67,12 +72,14 @@ C_INCLUDES =  \
 -I$(SDK_DIR)/platform/hk/HK32F030/CMSIS/CM0/CoreSupport	\
 -I$(SDK_DIR)/components/util	\
 -I$(SDK_DIR)/components/lib_err	\
+-I$(SDK_DIR)/components/letter-shell/src \
 -I$(SDK_DIR)/customized/hal/gpio	\
 -I$(SDK_DIR)/customized/hal/systick	\
 -I$(SDK_DIR)/customized/hal/usart	\
 -I$(SDK_DIR)/customized/hk_lib/f0/usart	\
 -I$(SDK_DIR)/customized/hk_lib/f0/gpio	\
 -I$(SDK_DIR)/customized/hk_lib/f0/systick	\
+-I$(SDK_DIR)/customized/hal/letter_shell	\
 -I$(SDK_DIR)/components/trace
 
 # ASM sources
