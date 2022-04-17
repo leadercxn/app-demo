@@ -42,6 +42,8 @@ $(info PLATFORM: $(PLATFORM))
 ######################################
 # C sources
 C_SOURCES =  			\
+handler/nt_handler.c 	\
+handler/letter_handler.c	\
 src/main.c 				\
 src/hk_peripheral.c 	\
 src/hk32f0xx_it.c  		\
@@ -55,7 +57,12 @@ $(SDK_DIR)/components/letter-shell/src/shell_cmd_list.c	\
 $(SDK_DIR)/components/letter-shell/src/shell_companion.c	\
 $(SDK_DIR)/components/letter-shell/src/shell_ext.c	\
 $(SDK_DIR)/components/letter-shell/src/shell.c	\
-$(SDK_DIR)/customized/hal/letter_shell/letter_handler.c \
+$(SDK_DIR)/components/ntshell/core/ntshell.c	\
+$(SDK_DIR)/components/ntshell/core/ntlibc.c	\
+$(SDK_DIR)/components/ntshell/core/text_editor.c	\
+$(SDK_DIR)/components/ntshell/core/text_history.c	\
+$(SDK_DIR)/components/ntshell/core/vtrecv.c	\
+$(SDK_DIR)/components/ntshell/core/vtsend.c	\
 $(SDK_DIR)/customized/hal/usart/retarget.c	\
 $(SDK_DIR)/customized/hk_lib/f0/usart/hk_usart.c	\
 $(SDK_DIR)/customized/hk_lib/f0/gpio/hk_gpio.c	\
@@ -79,7 +86,8 @@ C_INCLUDES =  \
 -I$(SDK_DIR)/customized/hk_lib/f0/usart	\
 -I$(SDK_DIR)/customized/hk_lib/f0/gpio	\
 -I$(SDK_DIR)/customized/hk_lib/f0/systick	\
--I$(SDK_DIR)/customized/hal/letter_shell	\
+-I$(SDK_DIR)/components/ntshell/core 	\
+-I$(SDK_DIR)/components/ntshell/util 	\
 -I$(SDK_DIR)/components/trace
 
 # ASM sources

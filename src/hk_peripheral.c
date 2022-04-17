@@ -52,8 +52,10 @@ usart_object_t g_usart_object = {
       .usart_put = hk_uart_obj_put,
 #elif defined(__GNUC__)   
       .usart_write = hk_uart_obj_put,
+      .usart_read = hk_uart_obj_get,
       .usart_write_buffer = hk_uart_obj_puts,
       .usart_read_buffer  = hk_uart_obj_gets,
+      .usart_put_string = hk_uart_obj_putstring,
 #endif
   }
 };
@@ -81,7 +83,7 @@ systick_object_t g_systick_obj = {
     .systick_cfg = {
         .clk_div = SysTick_CLKSource_HCLK_Div8,
         .ticks_per_us = 9,
-        .ticks_per_sec = 1000,
+        .ticks_per_sec = 1,
     },
 
     .systick_ops = {

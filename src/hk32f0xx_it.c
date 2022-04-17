@@ -71,9 +71,9 @@ void PendSV_Handler(void)
   * @param  None
   * @retval None
   */
-__attribute__((weak)) void SysTick_Handler(void)
-{
-}
+//__attribute__((weak)) void SysTick_Handler(void)
+//{
+//}
 
 /******************************************************************************/
 /*                 HK32F0xx Peripherals Interrupt Handlers                   */
