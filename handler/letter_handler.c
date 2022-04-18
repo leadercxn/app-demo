@@ -14,10 +14,13 @@ static char shellBuffer[128];
  * 
  * @return short 实际写入的数据长度
  */
-short userShellWrite(char *data, unsigned short len)
+static short userShellWrite(char *data, unsigned short len)
 {
+    uint16_t tx_len = len;
+
     g_usart_object.usart_ops.usart_write_buffer((uint8_t *)data, len);
-    return len;
+
+    return tx_len;
 }
 
 /**
@@ -28,7 +31,7 @@ short userShellWrite(char *data, unsigned short len)
  * 
  * @return short 实际读取到
  */
-short userShellRead(char *data, unsigned short len)
+static short userShellRead(char *data, unsigned short len)
 {
     return g_usart_object.usart_ops.usart_read_buffer((uint8_t *)data, len);
 }
@@ -45,7 +48,7 @@ void letter_shell_init(void)
     shell.read = userShellRead;
     shellInit(&shell, shellBuffer, sizeof(shellBuffer));
 
-    shellTask(&shell);
+    //shellTask(&shell);
 
     // while (1)
     // {
@@ -53,8 +56,13 @@ void letter_shell_init(void)
     //     usart_put_string(&m_usart_obj, "\n\r");
     //     usart_put_chars(&m_usart_obj, buff, 10);
     // }
-    
-
 }
+
+void letter_shell_loop_task(void)
+{
+    shellTask(&shell);
+}
+
+
 
 

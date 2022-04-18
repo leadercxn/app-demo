@@ -19,7 +19,7 @@
  *        使能此宏，则`shellTask()`函数会一直循环读取输入，一般使用操作系统建立shell
  *        任务时使能此宏，关闭此宏的情况下，一般适用于无操作系统，在主循环中调用`shellTask()`
  */
-#define     SHELL_TASK_WHILE            1
+#define     SHELL_TASK_WHILE            0
 
 /**
  * @brief 是否使用命令导出方式
@@ -93,7 +93,7 @@
 /**
  * @brief 历史命令记录数量
  */
-#define     SHELL_HISTORY_MAX_NUMBER    5
+#define     SHELL_HISTORY_MAX_NUMBER    8
 
 /**
  * @brief 双击间隔(ms)
@@ -149,13 +149,13 @@
  * @brief shell内存分配
  *        shell本身不需要此接口，若使用shell伴生对象，需要进行定义
  */
-#define     SHELL_MALLOC(size)          1
+#define     SHELL_MALLOC(size)          0
 
 /**
  * @brief shell内存释放
  *        shell本身不需要此接口，若使用shell伴生对象，需要进行定义
  */
-#define     SHELL_FREE(obj)             1
+#define     SHELL_FREE(obj)             0
 
 /**
  * @brief 是否显示shell信息
