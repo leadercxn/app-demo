@@ -41,12 +41,13 @@ $(info PLATFORM: $(PLATFORM))
 # source
 ######################################
 # C sources
-C_SOURCES =  			\
+C_SOURCES =  				\
 handler/letter_handler.c	\
-src/main.c 				\
-src/hk_peripheral.c 	\
-src/hk32f0xx_it.c  		\
-core/system_hk32f0xx.c	\
+src/main.c 					\
+src/hk_peripheral.c 		\
+src/hk32f0xx_it.c  			\
+src/shell_cmds/test_cmd.c	\
+core/system_hk32f0xx.c		\
 $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_gpio.c	\
 $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_misc.c	\
 $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_rcc.c	\

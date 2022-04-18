@@ -3,7 +3,7 @@
 #include "usart.h"
 
 static Shell shell;
-static char shellBuffer[128];
+static char shellBuffer[512];
 
 
 /**
@@ -16,11 +16,9 @@ static char shellBuffer[128];
  */
 static short userShellWrite(char *data, unsigned short len)
 {
-    uint16_t tx_len = len;
-
     g_usart_object.usart_ops.usart_write_buffer((uint8_t *)data, len);
 
-    return tx_len;
+    return len;
 }
 
 /**
