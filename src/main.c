@@ -25,7 +25,9 @@ int main(void)
   g_led_obj.gpio_ops.gpio_init(&g_led_obj.gpio_cfg);
   g_led_obj.gpio_ops.gpio_output_set(&g_led_obj.gpio_cfg, 0);
 
-  init_nt_shell();
+//  init_nt_shell();
+
+  letter_shell_init();
 
   trace_info("loop\r\n");
   while (1)
@@ -42,7 +44,9 @@ int main(void)
     g_usart_object.usart_ops.usart_write_buffer(&rx_buf, 1);
 #endif
 
+#if 0
     ntshell_loop_task();
+#endif
   }
 }
 
