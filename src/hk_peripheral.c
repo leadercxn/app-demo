@@ -7,6 +7,8 @@
 #include "hk_gpio.h"
 #include "systick.h"
 #include "hk_systick.h"
+#include "timer.h"
+#include "hk_timer.h"
 
 #include "hk_peripheral.h"
 
@@ -92,6 +94,22 @@ systick_object_t g_systick_obj = {
         .delay_us = hk_delay_us_rebuild,
         .systick_get = hk_systick_get,
     },
+};
+
+timer_object_t g_timer3_object = {
+    .timer_cfg = {
+        .period = 1000,             //计数到 1K 时溢出
+        .prescaler_freq = 1000000,  //分频后得到 1M 时钟
+        .ticks = 0,
+        .timer = TIM3,
+    },
+    .timer_ops = {
+        .timer_init = hk_timer3_init,
+        .timer_start = hk_timer3_start,
+        .timer_stop = hk_timer3_stop,
+        .timer_irq_enable = hk_timer3_irq_enable,
+        .timer_irq_disable = hk_timer3_irq_disable,
+    }
 };
 
 

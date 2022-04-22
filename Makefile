@@ -52,7 +52,10 @@ $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_gpio.c	\
 $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_misc.c	\
 $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_rcc.c	\
 $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_usart.c	\
+$(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_tim.c	\
 $(SDK_DIR)/components/trace/trace.c	\
+$(SDK_DIR)/components/app_scheduler/app_scheduler.c	\
+$(SDK_DIR)/components/app_timer/app_timer_list.c	\
 $(SDK_DIR)/components/letter-shell/src/shell_cmd_list.c	\
 $(SDK_DIR)/components/letter-shell/src/shell_companion.c	\
 $(SDK_DIR)/components/letter-shell/src/shell_ext.c	\
@@ -60,7 +63,9 @@ $(SDK_DIR)/components/letter-shell/src/shell.c	\
 $(SDK_DIR)/customized/hal/usart/retarget.c	\
 $(SDK_DIR)/customized/hk_lib/f0/usart/hk_usart.c	\
 $(SDK_DIR)/customized/hk_lib/f0/gpio/hk_gpio.c	\
-$(SDK_DIR)/customized/hk_lib/f0/systick/hk_systick.c
+$(SDK_DIR)/customized/hk_lib/f0/systick/hk_systick.c	\
+$(SDK_DIR)/customized/hk_lib/f0/timer/hk_timer.c
+
 
 # C includes
 C_INCLUDES =  \
@@ -77,10 +82,15 @@ C_INCLUDES =  \
 -I$(SDK_DIR)/customized/hal/gpio	\
 -I$(SDK_DIR)/customized/hal/systick	\
 -I$(SDK_DIR)/customized/hal/usart	\
+-I$(SDK_DIR)/customized/hal/timer	\
 -I$(SDK_DIR)/customized/hk_lib/f0/usart	\
 -I$(SDK_DIR)/customized/hk_lib/f0/gpio	\
 -I$(SDK_DIR)/customized/hk_lib/f0/systick	\
--I$(SDK_DIR)/components/trace
+-I$(SDK_DIR)/customized/hk_lib/f0/timer	\
+-I$(SDK_DIR)/components/trace	\
+-I$(SDK_DIR)/components/queue	\
+-I$(SDK_DIR)/components/app_scheduler	\
+-I$(SDK_DIR)/components/app_timer
 
 # ASM sources
 ASM_SOURCES =  \
@@ -94,7 +104,6 @@ AS_DEFS =
 C_DEFS =  \
 -DUSE_STDPERIPH_DRIVER \
 -DHK32F030 \
--DVERSION="${VERSION}"	\
 -DBOARD_V001	\
 -DTRACE_ENABLE	\
 -DTRACE_LEVEL=5

@@ -170,7 +170,7 @@
 /**
  * @brief shell默认用户
  */
-#define     SHELL_DEFAULT_USER          "letter"
+#define     SHELL_DEFAULT_USER          "App"
 
 /**
  * @brief shell默认用户密码
