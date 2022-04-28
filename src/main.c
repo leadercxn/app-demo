@@ -1,4 +1,5 @@
 #include "stdio.h"
+#include "stdint.h"
 #include "string.h"
 
 #include "boards.h"
@@ -25,8 +26,11 @@ void test_timer_handler(void *p_data)
         g_led_obj.gpio_ops.gpio_output_set(&g_led_obj.gpio_cfg, is_led_off);
         is_led_off = true;
     }
+}
 
-    trace_debug("ticks = %d \n\r",g_timer3_object.timer_cfg.ticks);
+void exit_irq_cb(exit_cfg_t *p_exit_cfg)
+{
+  trace_debug("exit_irq_cb\r\n");
 }
 
 int main(void)
@@ -50,8 +54,12 @@ int main(void)
 
   TIMER_INIT(&g_timer3_object);
 
+  /* exit */
+  g_exit4_15_obj.exit_ops.exit_init(&g_exit4_15_obj.exit_cfg);
+  g_exit4_15_obj.exit_ops.exit_irq_cb = exit_irq_cb;
+
   TIMER_CREATE(&m_test_timer, false, false, test_timer_handler);
-  TIMER_START(m_test_timer, 500);
+  TIMER_START(m_test_timer, 1000);
 
   while (1)
   {

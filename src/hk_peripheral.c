@@ -9,6 +9,8 @@
 #include "hk_systick.h"
 #include "timer.h"
 #include "hk_timer.h"
+#include "exit.h"
+#include "hk_exit.h"
 
 #include "hk_peripheral.h"
 
@@ -110,6 +112,28 @@ timer_object_t g_timer3_object = {
         .timer_irq_enable = hk_timer3_irq_enable,
         .timer_irq_disable = hk_timer3_irq_disable,
     }
+};
+
+hk_exit_pin_cfg g_hk_exit_pin8_cfg = {
+    .exit_pin_port = EXIT_GPIO_PORT,
+    .exit_pin = EXIT_GPIO_PIN,
+    .exit_pin_clk = EXIT_GPIO_PORT_CLK,
+    .exit_pin_port_source = EXIT_GPIO_PORT_RESOURCE,
+    .exit_pin_source = EXIT_GPIO_PIN_RESOURCE,
+};
+
+hk_exit_cfg g_hk_exit8_cfg = {
+    .exit_line = EXIT_LINE,
+    .exit_trigger = EXIT_TRIGGER_MODE,
+};
+
+exit_object_t g_exit4_15_obj = {
+    .exit_cfg.p_exit_cfg = (void *)&g_hk_exit8_cfg,
+    .exit_cfg.p_pin_cfg = (void *)&g_hk_exit_pin8_cfg,
+
+    .exit_ops.exit_init = hk_exit4_15_init,
+    .exit_ops.exit_enable = hk_exit4_15_enable,
+    .exit_ops.exit_disable = hk_exit4_15_disable,
 };
 
 

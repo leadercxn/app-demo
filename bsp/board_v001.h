@@ -64,4 +64,13 @@
 #define VIRT2_SDA_GPIO_PORT                 GPIOA                        /* GPIOA */
 #define VIRT2_SDA_GPIO_CLK                  RCC_AHBPeriph_GPIOA
 
+/* EXIT */
+#define EXIT_GPIO_PORT_CLK                  RCC_AHBPeriph_GPIOA
+#define EXIT_GPIO_PIN                       GPIO_Pin_8
+#define EXIT_GPIO_PORT_RESOURCE             EXTI_PortSourceGPIOA
+#define EXIT_GPIO_PIN_RESOURCE              EXTI_PinSource8
+#define EXIT_TRIGGER_MODE                   EXTI_Trigger_Falling
+#define EXIT_GPIO_PORT                      GPIOA
+#define EXIT_LINE                           EXTI_Line8
+
 #endif

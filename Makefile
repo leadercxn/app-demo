@@ -2,7 +2,7 @@ TARGET = app
 
 DEBUG = 1
 # optimization
-OPT = -O3 -g
+OPT = -O3 -g3
 
 # Build path
 BUILD_DIR = build
@@ -53,6 +53,8 @@ $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_misc.c	\
 $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_rcc.c	\
 $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_usart.c	\
 $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_tim.c	\
+$(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_exti.c	\
+$(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_syscfg.c	\
 $(SDK_DIR)/components/trace/trace.c	\
 $(SDK_DIR)/components/app_scheduler/app_scheduler.c	\
 $(SDK_DIR)/components/app_timer/app_timer_list.c	\
@@ -64,7 +66,8 @@ $(SDK_DIR)/customized/hal/usart/retarget.c	\
 $(SDK_DIR)/customized/hk_lib/f0/usart/hk_usart.c	\
 $(SDK_DIR)/customized/hk_lib/f0/gpio/hk_gpio.c	\
 $(SDK_DIR)/customized/hk_lib/f0/systick/hk_systick.c	\
-$(SDK_DIR)/customized/hk_lib/f0/timer/hk_timer.c
+$(SDK_DIR)/customized/hk_lib/f0/timer/hk_timer.c	\
+$(SDK_DIR)/customized/hk_lib/f0/exit/hk_exit.c
 
 
 # C includes
@@ -83,10 +86,12 @@ C_INCLUDES =  \
 -I$(SDK_DIR)/customized/hal/systick	\
 -I$(SDK_DIR)/customized/hal/usart	\
 -I$(SDK_DIR)/customized/hal/timer	\
+-I$(SDK_DIR)/customized/hal/exit	\
 -I$(SDK_DIR)/customized/hk_lib/f0/usart	\
 -I$(SDK_DIR)/customized/hk_lib/f0/gpio	\
 -I$(SDK_DIR)/customized/hk_lib/f0/systick	\
 -I$(SDK_DIR)/customized/hk_lib/f0/timer	\
+-I$(SDK_DIR)/customized/hk_lib/f0/exit	\
 -I$(SDK_DIR)/components/trace	\
 -I$(SDK_DIR)/components/queue	\
 -I$(SDK_DIR)/components/app_scheduler	\
@@ -168,6 +173,7 @@ AS_INCLUDES =
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
 
 CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
+CFLAGS += -std=c99
 
 ifeq ($(DEBUG), 1)
 CFLAGS += -g -gdwarf-2
@@ -189,6 +195,9 @@ LIBS = -lc -lm -lnosys
 LIBDIR = 
 LDFLAGS = $(MCU) -specs=nano.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
 
+#function for removing duplicates in a list 除去同文件不同路径下的BUG
+remduplicates = $(strip $(if $1,$(firstword $1) $(call remduplicates,$(filter-out $(firstword $1),$1))))
+
 # default action: build all
 all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
 
@@ -196,6 +205,11 @@ all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET
 #######################################
 # build the application
 #######################################
+# 假如存在同名文件不同路径的BUG，请使用以下命令
+#C_SOURCE_FILE_NAMES = $(notdir $(C_SOURCES))
+#C_PATHS = $(call remduplicates, $(dir $(C_SOURCES) ) )
+#OBJECTS = $(addprefix $(BUILD_DIR)/, $(C_SOURCE_FILE_NAMES:.c=.o) )
+
 # list of objects
 OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.c=.o)))
 vpath %.c $(sort $(dir $(C_SOURCES)))
