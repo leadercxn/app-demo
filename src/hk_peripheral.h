@@ -5,11 +5,13 @@
 #include "gpio.h"
 #include "systick.h"
 #include "exit.h"
+#include "adc.h"
 
 extern usart_object_t   g_usart_object;
 extern gpio_object_t    g_led_obj;
 extern systick_object_t g_systick_obj;
 extern timer_object_t   g_timer3_object;
 extern exit_object_t    g_exit4_15_obj;
+extern adc_object_t     g_adc1_ch0_obj;
 
 #endif

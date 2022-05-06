@@ -11,10 +11,12 @@
 #include "hk_timer.h"
 #include "exit.h"
 #include "hk_exit.h"
+#include "adc.h"
+#include "hk_adc.h"
 
 #include "hk_peripheral.h"
 
-// 串口obj赋值
+// 串口obj赋值s
 hk_uart_info_t g_hk_uart_info = {
     .uart = USART1,
     .tx_port = TRACE_UART_TX_GPIO_PORT,
@@ -80,8 +82,6 @@ gpio_object_t g_led_obj = {
     },
 };
 
-
-
 // systick
 systick_object_t g_systick_obj = {
     .systick_cfg = {
@@ -117,7 +117,7 @@ timer_object_t g_timer3_object = {
 hk_exit_pin_cfg g_hk_exit_pin8_cfg = {
     .exit_pin_port = EXIT_GPIO_PORT,
     .exit_pin = EXIT_GPIO_PIN,
-    .exit_pin_clk = EXIT_GPIO_PORT_CLK,
+    .exit_pin_port_clk = EXIT_GPIO_PORT_CLK,
     .exit_pin_port_source = EXIT_GPIO_PORT_RESOURCE,
     .exit_pin_source = EXIT_GPIO_PIN_RESOURCE,
 };
@@ -136,4 +136,28 @@ exit_object_t g_exit4_15_obj = {
     .exit_ops.exit_disable = hk_exit4_15_disable,
 };
 
+hk_adc_pin_cfg g_hk_adc1_ch0_pin_cfg = {
+    .adc_pin_port_clk = ADC_GPIO_PORT_CLK,
+    .adc_pin_port = ADC_GPIO_PORT,
+    .adc_pin = ADC_GPIO_PIN_0,
+};
+
+hk_adc_cfg g_hk_adc1_cfg = {
+    .adc_continuous_mode = DISABLE,
+    .adc_data_align = ADC_DataAlign_Right,
+    .adc_resolution = ADC_Resolution_12b,
+    .adc_trigger = ADC_ExternalTrigConvEdge_None,
+    .adc_scan_dir = ADC_ScanDirection_Upward,
+};
+
+adc_object_t  g_adc1_ch0_obj = {
+    .adc_cfg.p_pin_cfg = (void *) &g_hk_adc1_ch0_pin_cfg,
+    .adc_cfg.p_adc_cfg = (void *) &g_hk_adc1_cfg,
+
+    .adc_cfg.channel = ADC_CHANNEL_0,
+    .adc_ops.adc_init = hk_adc1_init,
+    .adc_ops.adc_enable = hk_adc1_enable,
+    .adc_ops.adc_disable = hk_adc1_disable,
+    .adc_ops.adc_value_get = hk_adc_value_get,
+};
 

@@ -35,6 +35,9 @@ void exit_irq_cb(exit_cfg_t *p_exit_cfg)
 
 int main(void)
 {
+  uint64_t old_systicks = 0;
+  uint16_t adc_ch0_value = 0;
+
   /* init systick */
   g_systick_obj.systick_ops.systick_init(&g_systick_obj.systick_cfg);
 
@@ -58,14 +61,24 @@ int main(void)
   g_exit4_15_obj.exit_ops.exit_init(&g_exit4_15_obj.exit_cfg);
   g_exit4_15_obj.exit_ops.exit_irq_cb = exit_irq_cb;
 
+  g_adc1_ch0_obj.adc_ops.adc_init(&g_adc1_ch0_obj.adc_cfg);
+
   TIMER_CREATE(&m_test_timer, false, false, test_timer_handler);
   TIMER_START(m_test_timer, 1000);
 
   while (1)
   {
     letter_shell_loop_task();
-
     TIMER_SCHEDULER_LOOP();
+
+    if((g_timer3_object.timer_cfg.ticks - old_systicks) > 1000)
+    {
+        old_systicks = g_timer3_object.timer_cfg.ticks;
+
+        g_adc1_ch0_obj.adc_ops.adc_value_get(&g_adc1_ch0_obj.adc_cfg, &adc_ch0_value);
+
+        trace_info("adc %u mv\r\n", adc_ch0_value * 3300 / 4095);
+    }
   }
 }
 

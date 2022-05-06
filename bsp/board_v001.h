@@ -73,4 +73,17 @@
 #define EXIT_GPIO_PORT                      GPIOA
 #define EXIT_LINE                           EXTI_Line8
 
+/* ADC */
+#define ADC_CHANNEL_0                   ADC_Channel_0
+#define ADC_CHANNEL_1                   ADC_Channel_1
+
+#define ADC_GPIO_PORT_CLK               RCC_AHBPeriph_GPIOA
+#define ADC_GPIO_PIN_0                  GPIO_Pin_0
+#define ADC_GPIO_PIN_1                  GPIO_Pin_1
+#define ADC_GPIO_PORT                   GPIOA
+
+#define ADC_CONTINUOUS_CONV_MODE        DISABLE
+
+
+
 #endif
