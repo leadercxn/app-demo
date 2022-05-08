@@ -13,6 +13,10 @@
 #include "hk_exit.h"
 #include "adc.h"
 #include "hk_adc.h"
+#include "pwm.h"
+#include "hk_pwm.h"
+#include "flash.h"
+#include "hk_flash.h"
 
 #include "hk_peripheral.h"
 
@@ -159,5 +163,38 @@ adc_object_t  g_adc1_ch0_obj = {
     .adc_ops.adc_enable = hk_adc1_enable,
     .adc_ops.adc_disable = hk_adc1_disable,
     .adc_ops.adc_value_get = hk_adc_value_get,
+};
+
+hk_pwm_pin_cfg g_hk_timer15_ch1_pwm_pin_cfg = {
+    .pwm_pin = PWM_CH1_PIN,
+    .pwm_pin_port = PWM_CH1_GPIO_PORT,
+    .pwm_pin_port_clk = PWM_CH1_GPIO_CLK,
+    .pwm_pin_source = PWM_CH1_PIN_SOURCE,
+    .pwm_pin_af = PWM_CH1_AF,
+};
+
+hk_pwm_cfg g_hk_timer15_ch1_pwm_cfg = {
+    .duty_cycle = 90,
+    .freq = 38500,  //38k
+    .output_polarity = TIM_OCPolarity_Low,
+    .output_n_polarity = TIM_OCNPolarity_High,
+};
+
+pwm_object_t g_timer15_ch1_pwm_obj = {
+    .pwm_cfg.p_pin_cfg = (void *) &g_hk_timer15_ch1_pwm_pin_cfg,
+    .pwm_cfg.p_pwm_cfg = (void *) &g_hk_timer15_ch1_pwm_cfg,
+
+    .pwm_ops.pwm_init = hk_timer15_ch1_pwm_init,
+    .pwm_ops.pwm_enable = hk_timer15_ch1_pwm_enable,
+    .pwm_ops.pwm_disable = hk_timer15_ch1_pwm_disable,
+};
+
+flash_object_t g_flash_app_param_obj = {
+    .flash_cfg.flash_start_addr = FLASH_APP_PARAM_SAVE_ADDR,
+    .flash_cfg.flash_max_size = FLASH_PAGE_SIZE,
+    .flash_cfg.flash_page_size = FLASH_APP_PARAM_LEN_MAX,
+
+    .flash_ops.flash_write = hk_flash_write,
+    .flash_ops.flash_read = hk_flash_read,
 };
 

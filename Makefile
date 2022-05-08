@@ -56,6 +56,7 @@ $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_tim.c	\
 $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_exti.c	\
 $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_syscfg.c	\
 $(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_adc.c	\
+$(SDK_DIR)/platform/hk/HK32F030/STD_LIB/src/hk32f0xx_flash.c	\
 $(SDK_DIR)/components/trace/trace.c	\
 $(SDK_DIR)/components/app_scheduler/app_scheduler.c	\
 $(SDK_DIR)/components/app_timer/app_timer_list.c	\
@@ -69,8 +70,9 @@ $(SDK_DIR)/customized/hk_lib/f0/gpio/hk_gpio.c	\
 $(SDK_DIR)/customized/hk_lib/f0/systick/hk_systick.c	\
 $(SDK_DIR)/customized/hk_lib/f0/timer/hk_timer.c	\
 $(SDK_DIR)/customized/hk_lib/f0/exit/hk_exit.c	\
-$(SDK_DIR)/customized/hk_lib/f0/adc/hk_adc.c
-
+$(SDK_DIR)/customized/hk_lib/f0/adc/hk_adc.c	\
+$(SDK_DIR)/customized/hk_lib/f0/pwm/hk_pwm.c	\
+$(SDK_DIR)/customized/hk_lib/f0/flash/hk_flash.c
 
 # C includes
 C_INCLUDES =  \
@@ -90,12 +92,16 @@ C_INCLUDES =  \
 -I$(SDK_DIR)/customized/hal/timer	\
 -I$(SDK_DIR)/customized/hal/exit	\
 -I$(SDK_DIR)/customized/hal/adc	\
+-I$(SDK_DIR)/customized/hal/pwm	\
+-I$(SDK_DIR)/customized/hal/flash	\
 -I$(SDK_DIR)/customized/hk_lib/f0/usart	\
 -I$(SDK_DIR)/customized/hk_lib/f0/gpio	\
 -I$(SDK_DIR)/customized/hk_lib/f0/systick	\
 -I$(SDK_DIR)/customized/hk_lib/f0/timer	\
 -I$(SDK_DIR)/customized/hk_lib/f0/exit	\
 -I$(SDK_DIR)/customized/hk_lib/f0/adc	\
+-I$(SDK_DIR)/customized/hk_lib/f0/pwm	\
+-I$(SDK_DIR)/customized/hk_lib/f0/flash	\
 -I$(SDK_DIR)/components/trace	\
 -I$(SDK_DIR)/components/queue	\
 -I$(SDK_DIR)/components/app_scheduler	\
